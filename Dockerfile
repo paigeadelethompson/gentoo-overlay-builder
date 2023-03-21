@@ -2,12 +2,24 @@ FROM gentoo/stage3
 
 ENV FEATURES "-ipc-sandbox -pid-sandbox -network-sandbox"
 
-ENV PORTDIR_OVERLAY /mnt/gentoo/overlay
-
 RUN emerge-webrsync
 
-RUN emerge layman cmake
+ENV DISTDIR /tmp/distdir
+
+RUN emerge --newuse -uv layman cmake
+
+ENV PORTDIR_OVERLAY /mnt/gentoo/overlay
+
+ENV CFLAGS "-O3 -fstack-protector-all"
+
+ENV CXXFLAGS "-O3 -fstack-protector-all"
+
+ENV PKGDIR /mnt/dist
 
 VOLUME /var/db/repos/gentoo/
 
-CMD emerge
+ENV FEATURES "-ipc-sandbox -pid-sandbox -network-sandbox buildpkg"
+
+ENV BINPKG_COMPRESS "xz"
+
+ENTRYPOINT ["emerge"]
