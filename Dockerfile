@@ -6,7 +6,7 @@ RUN emerge-webrsync
 
 ENV DISTDIR /tmp/distdir
 
-RUN emerge --newuse -uv layman cmake
+RUN emerge --newuse -uv layman cmake dpkg rpm
 
 ENV PORTDIR_OVERLAY /mnt/gentoo/overlay
 
