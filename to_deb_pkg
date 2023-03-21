@@ -1,0 +1,22 @@
+#!/bin/bash
+
+mkdir /mnt/deb
+
+cd /mnt/deb
+
+find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak
+
+for x in $(ls -1 *.bz2); do 
+  package=$(basename $x .xpak.tar.bz2)
+  mkdir $package_$ARCH/debian
+  tar -xJvf $x -C $package_$ARCH
+  version=$(echo $package | tr '-' ' ' | awk '{print $NF}')
+  name=$(echo $package | tr '-' ' ' | awk '{print $1}')
+  echo "
+Package: ${name}
+Version: ${version}
+Architecture: ${ARCH}" > $package_$ARCH/debian/control
+  dpkg-deb --build --root-owner-group $package_$ARCH
+  rm $x
+done
+

@@ -22,4 +22,8 @@ ENV FEATURES "-ipc-sandbox -pid-sandbox -network-sandbox buildpkg"
 
 ENV BINPKG_COMPRESS "xz"
 
+ADD to_deb_pkg /usr/bin/to_deb_pkg
+
+RUN chmod +x /usr/bin/to_deb_pkg
+
 ENTRYPOINT ["emerge"]
