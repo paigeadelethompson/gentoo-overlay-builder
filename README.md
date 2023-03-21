@@ -184,5 +184,8 @@ Description: A program that greets you.
  You can add a longer description here. Mind the space at the beginning of this paragraph.
 ```
 - Run the step to build the xpaks 
-- Split the xpacks into the deb directory `docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest bash -c 'find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak'`
+- Split the xpacks into the deb directory 
+```
+docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest bash -c 'find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak'
+```
 - 
