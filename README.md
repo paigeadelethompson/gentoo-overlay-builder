@@ -168,20 +168,4 @@ https://wiki.gentoo.org/wiki/Binary_package_guide#Understanding_the_binary_packa
 
 ## Converting xpaks to debs
 - add `deb/` to root `.gitignore`
-```
-Package: hello
-Version: 1.0
-Architecture: arm64
-Maintainer: Internal Pointers <info@internalpointers.com>
-Description: A program that greets you.
- You can add a longer description here. Mind the space at the beginning of this paragraph.
-```
-- Run the step to build the xpaks 
-- Split the xpacks into the deb directory 
-```
-docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest 'find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak'
-```
-- extract 
-```
-docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest ls -1 *.bz2 | xargs -i mkdir $(basename {} .xpak.tar.bz2)/debian
-```
+- TODO
