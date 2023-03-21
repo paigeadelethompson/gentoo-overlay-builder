@@ -98,3 +98,66 @@ docker run -it --rm -v /path/to/your/src/tree:/mnt paigeadele/gentoo-overlay-bui
 docker run -it --rm -v /path/to/your/src/tree:/mnt paigeadele/gentoo-overlay-builder:latest clandestine::clandestine
 ```
 
+## Result 
+Your source tree will have a `dist/` directory that contains your built project and it's dependencies, you should add this to your `.gitignore` 
+```
+tree dist
+dist
+├── Packages
+├── acct-group
+│   ├── ldap
+│   │   └── ldap-0-1.xpak
+│   └── postgres
+│       └── postgres-0-r1-1.xpak
+├── acct-user
+│   ├── ldap
+│   │   └── ldap-0-1.xpak
+│   └── postgres
+│       └── postgres-0-r1-1.xpak
+├── app-arch
+│   └── lz4
+│       └── lz4-1.9.4-1.xpak
+├── app-crypt
+│   └── argon2
+│       └── argon2-20190702-r1-1.xpak
+├── app-eselect
+│   └── eselect-postgresql
+│       └── eselect-postgresql-2.4-r1-1.xpak
+├── dev-db
+│   ├── lmdb
+│   │   └── lmdb-0.9.29-1.xpak
+│   ├── mysql-connector-c
+│   │   └── mysql-connector-c-8.0.31-1.xpak
+│   └── postgresql
+│       └── postgresql-14.5-1.xpak
+├── dev-libs
+│   ├── libmaxminddb
+│   │   └── libmaxminddb-1.7.1-1.xpak
+│   ├── libpcre
+│   │   └── libpcre-8.45-r1-1.xpak
+│   ├── re2
+│   │   └── re2-0.2022.12.01-1.xpak
+│   └── utfcpp
+│       └── utfcpp-3.2.1-1.xpak
+├── media-gfx
+│   └── qrencode
+│       └── qrencode-4.1.1-1.xpak
+├── net-irc
+│   └── clandestine
+│       └── clandestine-9999-1.xpak
+├── net-libs
+│   ├── http-parser
+│   │   └── http-parser-2.9.4-r2-1.xpak
+│   └── mbedtls
+│       └── mbedtls-2.28.1-1.xpak
+└── net-nds
+    └── openldap
+        └── openldap-2.6.3-r7-1.xpak
+
+```
+
+and the files are in `.XZ` format 
+```
+file dist/net-irc/clandestine/clandestine-9999-1.xpak
+dist/net-irc/clandestine/clandestine-9999-1.xpak: XZ compressed data, checksum CRC64
+```
