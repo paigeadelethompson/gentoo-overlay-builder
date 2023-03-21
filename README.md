@@ -179,7 +179,7 @@ Description: A program that greets you.
 - Run the step to build the xpaks 
 - Split the xpacks into the deb directory 
 ```
-docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak
+docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest 'find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak'
 ```
 - extract 
 ```
