@@ -91,7 +91,7 @@ src_configure() {
 
 ### Manifest checksums
 ```
-docker run -it --rm -v /path/to/your/src/tree:/mnt paigeadele/gentoo-overlay-builder:latest --entrypoint ebuild /mnt/gentoo/overlay/net-irc/clandestine/clandestine-9999.ebuild manifest
+docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint ebuild paigeadele/gentoo-overlay-builder:latest /mnt/gentoo/overlay/net-irc/clandestine/clandestine-9999.ebuild manifest
 ```
 ### Building 
 ```
@@ -164,3 +164,25 @@ dist/net-irc/clandestine/clandestine-9999-1.xpak: XZ compressed data, checksum C
 
 ### More info 
 https://wiki.gentoo.org/wiki/Binary_package_guide#Understanding_the_binary_package_format
+
+
+## Converting xpaks to debs
+- add only these two lines to your root `.gitignore`
+```
+*.bz2
+*.xpak
+dist/Packages
+deb/
+```
+- create `debian/` underneath each package directory that needs to be converted, add to it a file called `control` with the following contents respectively:
+```
+Package: hello
+Version: 1.0
+Architecture: arm64
+Maintainer: Internal Pointers <info@internalpointers.com>
+Description: A program that greets you.
+ You can add a longer description here. Mind the space at the beginning of this paragraph.
+```
+- Run the step to build the xpaks 
+- Split the xpacks into the deb directory `docker run -it --rm -v /path/to/your/src/tree:/mnt --entrypoint /bin/bash --workdir /mnt/deb paigeadele/gentoo-overlay-builder:latest bash -c 'find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak'`
+- 
