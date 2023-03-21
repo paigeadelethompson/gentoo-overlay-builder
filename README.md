@@ -161,3 +161,6 @@ and the files are in `.XZ` format
 file dist/net-irc/clandestine/clandestine-9999-1.xpak
 dist/net-irc/clandestine/clandestine-9999-1.xpak: XZ compressed data, checksum CRC64
 ```
+
+### More info 
+https://wiki.gentoo.org/wiki/Binary_package_guide#Understanding_the_binary_package_format
