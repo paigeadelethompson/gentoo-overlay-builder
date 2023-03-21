@@ -1,22 +1,28 @@
 #!/bin/bash
 
-mkdir /mnt/deb
+if [[ ! -z "${ARCH}" ]]; then
+  echo "ARCH env variable not set, required"
+  exit 1
+fi
 
-cd /mnt/deb
+if [[ ! -d /mnt/deb ]] then 
+  echo "deb directory doesn't exist, required" 
+  exit 1
+fi
 
-find /mnt/dist -type f -name "*.xpak" | xargs -i qtbz2 -s {} && rm *.xpak
-
-for x in $(ls -1 *.bz2); do 
-  package=$(basename $x .xpak.tar.bz2)
-  mkdir $package_$ARCH/debian
-  tar -xJvf $x -C $package_$ARCH
-  version=$(echo $package | tr '-' ' ' | awk '{print $NF}')
-  name=$(echo $package | tr '-' ' ' | awk '{print $1}')
-  echo "
-Package: ${name}
-Version: ${version}
-Architecture: ${ARCH}" > $package_$ARCH/debian/control
-  dpkg-deb --build --root-owner-group $package_$ARCH
-  rm $x
+for x in $(find /mnt/dist -type f -name "*.xpak"); do 
+  cat=$(echo $x | tr '/' ' ' | awk '{print $3}')
+  name=$(echo $x | tr '/' ' ' | awk '{print $NF}' | tr '-' ' ' | awk '{print $1}')
+  if [[ -d /mnt/deb/$cat/$name ]]; then 
+      cd $cat/$name
+      qtbz2 -s $x
+      tar -xJvf $x.tar.bz2
+      rm $x.tar.bz2
+      package=$(basename $x .xpak.tar.bz2)
+      rm $($basename $x).xpak
+      cd ../../
+      ln -s $cat/$name $package_$ARCH
+      dpkg-deb --build --root-owner-group $package_$ARCH
+      rm $package_$ARCH
+  fi
 done
-
